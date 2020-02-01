@@ -36,7 +36,7 @@ class AddUserPage extends StatefulWidget {
 class Student {
   
   String user,barcode, name, college, number, year;
-  bool isRegistered;
+  bool isRegistered = true;
   Student({this.user,this.barcode, this.name, this.college, this.number, this.year,this.isRegistered});
 
   factory Student.fromJson(Map<String, dynamic> json) {
@@ -200,6 +200,11 @@ class _AddUserPageState extends State<AddUserPage> {
   
   }
   Future returnAlert(String promptText) async {
+    if(promptText == null)  {
+      promptText = "Sorry,Error occured! Please try again!";
+      
+
+    }
     return showDialog (
             context: context,
             builder: (context) {
@@ -207,7 +212,13 @@ class _AddUserPageState extends State<AddUserPage> {
                 content: Text(promptText,
                           textAlign: TextAlign.center),
                 actions: <Widget>[
-                  new FlatButton(onPressed: () => Navigator.pop(context), child: new Text('Ok'))],
+                  new FlatButton(onPressed: () {
+                    Navigator.pop(context);
+                    if(promptText == "Error occured")
+                    {
+                      Navigator.pop(context);
+                    }
+                  }, child: new Text('Ok'))],
               );
             },
           );
@@ -272,6 +283,7 @@ class _AddUserPageState extends State<AddUserPage> {
       formInvalid = true;
     }
     if(formInvalid) {
+      print(promptText);
       return returnAlert(promptText);
     }
     else {
@@ -299,6 +311,7 @@ class _AddUserPageState extends State<AddUserPage> {
           setState(() {
             processingRequest = false;
           });
+          promptText = response.body;
           return returnAlert(response.body);
         }
       });
@@ -342,50 +355,50 @@ class _AddUserPageState extends State<AddUserPage> {
                       fontSize: 18.0,
                       ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(12.0)),
-                  Row(children: <Widget>[
-                    new Padding(padding: new EdgeInsets.all(36.0)),
+                  new Padding(padding: new EdgeInsets.all(5.0)),
+                  // Row(children: <Widget>[
+                  //   new Padding(padding: new EdgeInsets.all(36.0)),
                   
-                  RichText(text: TextSpan(text :"Already Registered?",
-                  style: TextStyle(fontSize: 20))),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Yes"),
-                        Checkbox(
-                          value: isRegistered,
-                          onChanged: (bool value) {
-                            setState(() {
-                              isRegistered = value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                  // RichText(text: TextSpan(text :"Already Registered?",
+                  // style: TextStyle(fontSize: 20))),
+                  //   Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: <Widget>[
+                  //       Text("Yes"),
+                  //       Checkbox(
+                  //         value: isRegistered,
+                  //         onChanged: (bool value) {
+                  //           setState(() {
+                  //             isRegistered = value;
+                  //           });
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
                     // [Tuesday] checkbox
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("No"),
-                        Checkbox(
-                          // activeColor: Color.fromRGBO(34, 34, 103, 20),
-                          // checkColor: Color.fromRGBO(255, 255, 255, 4),
-                          value: !isRegistered,
-                          onChanged: (bool value) {
-                            setState(() {
-                              isRegistered = !value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                    // Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     Text("No"),
+                    //     Checkbox(
+                    //       // activeColor: Color.fromRGBO(34, 34, 103, 20),
+                    //       // checkColor: Color.fromRGBO(255, 255, 255, 4),
+                    //       value: !isRegistered,
+                    //       onChanged: (bool value) {
+                    //         setState(() {
+                    //           isRegistered = !value;
+                    //         });
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                     
-                  ],),
+                  // ],),
                   isRegistered ? Row(children: <Widget>[
                    new Padding(padding: new EdgeInsets.all(38.0)),
                   new Container(
-                    width: (MediaQuery.of(context).size.width)/1.8,
-
+                    width: (MediaQuery.of(context).size.width)/2.4,
+                    // height: 20,
                     child: new TextField(
                       controller: uController,
                       decoration: new InputDecoration(
@@ -393,10 +406,12 @@ class _AddUserPageState extends State<AddUserPage> {
                       ),
                     ),
                   ),
+                  new Padding(padding: new EdgeInsets.all(5.0)),
+                  
                   new MaterialButton(
                     minWidth: 50.0,
                     height: 3.0,
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(10.0),
                     textColor: Colors.white,
                     color: Colors.grey,
                     onPressed: search,
@@ -420,7 +435,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       ),
                     ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(12.0)),
+                  new Padding(padding: new EdgeInsets.all(5.0)),
                   new Container(
                     width: (MediaQuery.of(context).size.width)/1.5,
                     child: new TextField(
@@ -430,7 +445,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       ),
                     ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(12.0)),
+                  new Padding(padding: new EdgeInsets.all(5.0)),
                   new Container(
                     width: (MediaQuery.of(context).size.width)/1.5,
                     child: new TextField(
@@ -460,8 +475,12 @@ class _AddUserPageState extends State<AddUserPage> {
                   ),
                   ),
                   new Padding(padding: new EdgeInsets.all(7.0)),
-                  new MaterialButton(
-                    minWidth: 100.0,
+                  Row(children: <Widget>[
+                    new Padding(padding: new EdgeInsets.all(30.0)),
+  
+new MaterialButton(
+                  
+                   // minWidth: 100.0,
                     height: 5.0,
                     padding: const EdgeInsets.all(20.0),
                     textColor: Colors.white,
@@ -475,9 +494,9 @@ class _AddUserPageState extends State<AddUserPage> {
                         ),
                     ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(7.0)),
+                  new Padding(padding: new EdgeInsets.all(5.0)),
                   new MaterialButton(
-                    minWidth: 120.0,
+                   // minWidth: 120.0,
                     height: 6.0,
                     padding: const EdgeInsets.all(20.0),
                     textColor: Colors.white,
@@ -491,6 +510,8 @@ class _AddUserPageState extends State<AddUserPage> {
                         ),
                     ),
                   ),
+                  ],),
+                  
                   new Padding(padding: new EdgeInsets.all(5.0)),
                 ], 
         ) : const Center(child: const CircularProgressIndicator()), 

@@ -41,20 +41,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $teamID = $input["teamID"];
         $event = $input["event"];
         $marks = $input["marks"];
-            $sql = "UPDATE ". $event. " SET marks = ? where team_id = ?";
+            
+            $sql = "SELECT name from ". $event. " where team_id = ?";
             $stmt = $conn->prepare($sql);
-            if(!$stmt)  {
-                        
+            if(!$stmt)  
+            {
                 $err = array( 
-                    "status"=>"404", 
-                    "message"=> $conn->error
-                    ); 
-                    $has_err = 1;
-                    echo json_encode($err); 
+                "status"=>"404", 
+                "message"=> $conn->error
+                ); 
+                $has_err = 1;
+                echo json_encode($err); 
             }
             else 
             {
-                $stmt->bind_param("ss",$marks,$teamID);
+                $stmt->bind_param("s",$teamID);
                 if(!$stmt->execute()) 
                 {
                     $err = array( 
@@ -66,26 +67,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit(json_encode($err));
                 
                 }
-                // else {
-                    // $stmt->store_result();
-                        /** Yet to implement the check for whether the given team id exists or not */
-                    // if ($stmt->num_rows == 0) {
-                        // $err = array( 
-                        //     "status"=>"404", 
-                        //     "message"=> $stmt->error
-                        //     );
+                else {
+                                
+                    $stmt->bind_result($name);
+                    $stmt->store_result();
+                    if ($stmt->num_rows > 0) {
+                        $sql = "UPDATE ". $event. " SET marks = ? where team_id = ?";
+                        $stmt = $conn->prepare($sql);
+                        if(!$stmt)  {
+                                    
+                            $err = array( 
+                                "status"=>"404", 
+                                "message"=> $conn->error
+                                ); 
+                                $has_err = 1;
+                                echo json_encode($err); 
+                        }
+                        else 
+                        {
+                            $stmt->bind_param("ss",$marks,$teamID);
+                            if(!$stmt->execute()) 
+                            {
+                                $err = array( 
+                                    "status"=>"404", 
+                                    "message"=> $stmt->error
+                                    );
 
-                        // $has_err = 1;
-                        // exit(json_encode($err));
+                                $has_err = 1;
+                                exit(json_encode($err));
+                            
+                            }
+                            
+                            $stmt->free_result();
+                        }
+                    }
+                    else {
+                        $err = array( 
+                            "status"=>"404", 
+                            "message"=> "No data for given team ID"
+                            );
+
+                        $has_err = 1;
+                        exit(json_encode($err));
                     
-                    // }
-                // }
-                $stmt->free_result();
-           
-        
-            
-            }   
+                    }
+                }
+            }
+         
 
+    
+                
+             
+            
     
 
     }
@@ -117,20 +150,7 @@ else
     echo json_encode($err); ;
 
 }
-    // {"barcodes":"585&","event":"ospc","id":314253}
-// $user_qrs = $_POST['user_ids']
-
-// foreach($user_qrs as $qr)   {
-//     echo $qr;
-// }
-
-// foreach($user_qrs as $qr)   {
-
-//     echo $qr;
-    
-    
-
-// }
+   
 $conn->close();
 }
 

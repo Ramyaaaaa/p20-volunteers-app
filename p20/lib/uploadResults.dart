@@ -27,11 +27,13 @@ class Result {
         event: json['event'],
         marks: json['marks'],
         id: '425364');
+       // passMark : json['passMark']);
   }
 
   Map<String, dynamic> toJson() =>
-      {'teamID': teamID, 'event': event, 'marks': marks, 'id': '425364'};
+      {'teamID': teamID, 'event': event, 'marks': marks, 'id': '425364'};//,passMark:passMark,view:view};
 }
+
 
 Result resultFromJson(String str) {
   final jsonData = json.decode(str);
@@ -70,7 +72,7 @@ Future<http.Response> createResult(Result result) async {
 class _UploadResultsPageState extends State<UploadResultsPage> {
   bool isSubmitDisabled;
   bool processingRequest;
-
+  String passMark;
   String teamID, barcode;
   String event;
   String marks;
@@ -86,6 +88,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   final marksController = TextEditingController();
   final teamIDController = TextEditingController();
+  final passMarkController = TextEditingController();
 
   @override
   void initState() {
@@ -93,12 +96,15 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
     isSubmitDisabled = true;
     processingRequest = false;
     teamID = '';
+    passMark = '';
+
   }
 
   @override
   void dispose() {
     marksController.dispose();
     teamIDController.dispose();
+    passMarkController.dispose();
     super.dispose();
   }
 
@@ -180,6 +186,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       processingRequest = true;
       teamID = '';
       marks = '';
+      passMark = '';
     });
 
     // post request sent to server
@@ -220,37 +227,51 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Text('Do you want to publish the results?',
-              textAlign: TextAlign.center),
+          title: new Text('Do you want to publish the results?'),
+          content: TextField(
+            onChanged: (String textTyped) {
+              setState(() {
+                passMark = textTyped;
+              });
+            },
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: 'Enter the pass mark'),
+          ),
           actions: <Widget>[
             new FlatButton(
                 onPressed: () {
-                  Navigator.pop(context);
                   publishResult();
+                  Navigator.pop(context);
+                  
                 },
-                child: new Text('Yes')),
+                child: new Text('Confirm')),
             new FlatButton(
-                onPressed: () => Navigator.pop(context), child: new Text('No'))
+                onPressed: () => Navigator.pop(context), child: new Text('Cancel'))
           ],
         );
       },
     );
   }
 
+
   Future publishResult() async {
+
+    Map<String,dynamic> res = {'event': event, 'id': '425364','passMark':passMark,'view':0};
+    print(json.encode(res));
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {}
     } on SocketException catch (_) {
       return returnAlert('Connect to Internet and try again!');
     }
-    String url = 'http://34.73.200.44/publishResult';
+    String url = 'https://www.prayatna.org.in/volunteersapp/results.php';
     final response = await http.post(url,
         headers: {
           "Accept": "application/json",
           HttpHeaders.contentTypeHeader: 'application/json'
         },
-        body: json.encode(event));
+        body: json.encode(res)
+    );
     return showDialog(
       context: context,
       builder: (context) {
@@ -295,6 +316,10 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        leading: new IconButton(
+               icon: new Icon(Icons.arrow_back, color: Colors.white),
+               onPressed: () => Navigator.of(context).pop(),
+              ),
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

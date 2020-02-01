@@ -293,6 +293,11 @@ class _CreateTeamPageState extends State<CreateTeamPage>
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        leading: new IconButton(
+               icon: new Icon(Icons.arrow_back, color: Colors.white),
+               onPressed: () => Navigator.of(context).pop(),
+              ),
+        
        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
