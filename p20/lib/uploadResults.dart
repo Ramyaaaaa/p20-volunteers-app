@@ -256,7 +256,10 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   Future publishResult() async {
 
-    Map<String,dynamic> res = {'event': event, 'id': '425364','passMark':passMark,'view':0};
+    print(widget.eventName);
+    print(eventMap[widget.eventName]);
+    
+    Map<String,dynamic> res = {'event': eventMap[widget.eventName], 'id': '425364','passMark':passMark,'view':0};
     print(json.encode(res));
     try {
       final result = await InternetAddress.lookup('google.com');

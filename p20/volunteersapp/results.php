@@ -38,9 +38,11 @@ try {
     
         else if($input["id"] == 425364){
 
-            $res = json_decode(file_get_contents('results.json'),TRUE);
-            // echo $res;
-            if (is_array($res)) {
+            $str = file_get_contents($input["event"].'.json');
+            
+            $res = json_decode($str,TRUE);
+
+            if (filesize($input["event"].'json') != 0 && is_array($res)) {
 
                 if($input["view"] == 1)  {
                     exit(json_encode($res));
@@ -141,7 +143,7 @@ try {
                     exit(json_encode($a));
                 }
                 else {
-                    $fp = fopen('results.json', 'w');
+                    $fp = fopen($input["event"].'.json', 'w');
                     fwrite($fp, json_encode($a));
                     fclose($fp);
                     

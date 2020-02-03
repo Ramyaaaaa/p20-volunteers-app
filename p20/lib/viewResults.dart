@@ -6,9 +6,9 @@ import 'team.dart';
 List<Team> teamDetails;
 
 class ResultsPageRoute extends MaterialPageRoute<String> {
-  ResultsPageRoute({String title, String id})
+  ResultsPageRoute({String title})
       : super(
-          builder: (context) => new ResultsPage(title: title, id: id),
+          builder: (context) => new ResultsPage(title: title),
         );
 
   @override
@@ -19,23 +19,31 @@ class ResultsPageRoute extends MaterialPageRoute<String> {
 }
 
 class ResultsPage extends StatefulWidget {
-  final String title, id;
+  final String title;
 
-  ResultsPage({Key key, this.title, this.id}) : super(key: key);
+  ResultsPage({Key key, this.title}) : super(key: key);
 
   _ResultsPageState createState() => _ResultsPageState(
         title: this.title,
-        id: this.id,
+        
       );
 }
 
 class _ResultsPageState extends State<ResultsPage>
     implements HttpRequestContract {
-  final String title, id;
+  final String title;
   bool resultsReady;
   HttpRequest request;
+var eventMap = {
+    'OSPC': 'ospc',
+    'JAVA': 'java',
+    'DB Dwellers': 'dbd',
+    'Python': 'python',
+    'CnC': 'cnc',
+    'CTCI': 'ctci'
+  };
 
-  _ResultsPageState({this.title, this.id});
+  _ResultsPageState({this.title});
 
   @override
   void initState() {
@@ -46,7 +54,7 @@ class _ResultsPageState extends State<ResultsPage>
     request.loadResults();
   }
 
-  String getEventId() => this.id;
+ String getEventId() => eventMap[this.title];
 
   void onLoadResultsComplete(List<Team> teams, int selected) {
     setState(() {

@@ -121,7 +121,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                     context,
                     ResultsPageRoute(
                       title: widget.event,
-                      id: widget.event,
+                  
                     ),
                   );
                   if (value != null) {
