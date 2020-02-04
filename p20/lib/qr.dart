@@ -46,10 +46,14 @@ class _QRPageState extends State<QRPage> {
           ],
         ),
       ),
-      body: Center(
+      body: 
+      Container(
+        color: Colors.white,
+        child : Center(
         child: QrImage(
         data: qrMap[eventName],)
         ),
-      );
+      )
+    );
   }
 }

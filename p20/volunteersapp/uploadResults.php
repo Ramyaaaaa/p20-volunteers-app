@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $teamID = $input["teamID"];
         $event = $input["event"];
         $marks = $input["marks"];
-            
+        
             $sql = "SELECT name from ". $event. " where team_id = ?";
             $stmt = $conn->prepare($sql);
             if(!$stmt)  

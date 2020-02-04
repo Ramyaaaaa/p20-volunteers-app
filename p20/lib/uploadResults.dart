@@ -127,7 +127,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   Future showPrompt() {
     String promptText;
-    promptText = 'Scan steam ID!';
+    promptText = 'Scan team ID!';
     return returnAlert(promptText);
   }
   bool isNumeric(String s) {

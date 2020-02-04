@@ -89,7 +89,7 @@ class _CreateTeamPageState extends State<CreateTeamPage>
   String teamStrengthS;
   int teamStrength, barcodeScanned;
 
-  List<String> members = ['1', '2', '3'];
+  List<String> members = ['1', '2'];
 
   var eventMap = {'OSPC':'ospc', 'Coffee With Java':'java', 'DB Dwellers':'dbd',
                   'C Noobies':'cnob','Think-a-Thon' : 'think',
@@ -166,15 +166,25 @@ class _CreateTeamPageState extends State<CreateTeamPage>
     }
     try {
       String barcode = await BarcodeScanner.scan();
-
+      bool notok = false;
       if(id == "userid")  {
         setState(
-          () => this.barcode += barcode + '&'
+          ()  { notok = this.barcode.contains(barcode+'&');
+                if(notok)  {
+                  returnAlert("Barcode already scanned");
+                }
+                else {
+                  this.barcode += barcode + '&';
+                }
+          }
         );
+
+        if(notok == false)  {
         if(teamStrength!= 0)  {
           teamStrength = teamStrength-1;
           barcodeScanned = barcodeScanned+1;
         }
+      }
       }
       else if(id == "teamid") {
         setState(
@@ -188,6 +198,7 @@ class _CreateTeamPageState extends State<CreateTeamPage>
           teamStrength = int.parse(teamStrengthS);
         
       }
+      
       // else {
       //   teamStrength = teamStrength-1;
       // }

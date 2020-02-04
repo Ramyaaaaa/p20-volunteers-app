@@ -39,16 +39,19 @@ try {
         else if($input["id"] == 425364){
 
             $str = file_get_contents($input["event"].'.json');
-            
+            // echo $str;
             $res = json_decode($str,TRUE);
+            // echo $input["event"].'.json';
 
-            if (filesize($input["event"].'json') != 0 && is_array($res)) {
+            if (str != '' && is_array($res)) {
 
+                // echo "file is not empty";
                 if($input["view"] == 1)  {
+                    // echo "publish";
                     exit(json_encode($res));
                 }
                 else if($input["view"] == 0)    {
-                  
+                    // echo "tried upload but already publ";
                     $has_err = 1;
 
                     $err = array( 
@@ -62,7 +65,8 @@ try {
                 
                 }
             }
-            
+            // echo "view";
+            // echo $input["view"];
             if($input["view"] == 1)    {
                   
                 $err = array( 
@@ -73,6 +77,9 @@ try {
                 
                 exit(json_encode($err)); 
             }
+
+            $techEvents = array('hex', 'ospc', 'dbd', 'java',
+        'cnob','think','python','web'); 
 
             $passMark = $input["passMark"];
             $event = $input["event"];
@@ -108,31 +115,38 @@ try {
                     if($prev!=$team)
                     {
                         $selected = ($mark >= $passMark) ? 1 : 0;
-                        $a[$team]=array(
-                            "user"=>array(array(
-                                "qrcode"=>$barcode,
-                                "name"=>$name,
-                                "phone"=>$phone
-                            )),
-                            "mark"=>$mark,
-                            "selected"=> $selected,
-                            "size"=>1
-                        );
+                        if(in_array($event,$techEvents) || $selected == 1)    {
+                            $a[$team]=array(
+                                "user"=>array(array(
+                                    "qrcode"=>$barcode,
+                                    "name"=>$name,
+                                    "phone"=>$phone
+                                )),
+                                "mark"=>$mark,
+                                "selected"=> $selected,
+                                "size"=>1
+                            );
+                            
+                            $prev=$team;
+                        }
                         
-                        $prev=$team;
                     }
                     else
                     {
-                        $teamsize=$a[$team]["size"];
-                        $newname='u'.($teamsize+1);
-                    //   echo $teamsize;
-                        $b=array(
-                                "qrcode"=>$barcode,
-                                "name"=>$name,
-                                "phone"=>$phone
-                        );
-                        array_push($a[$team]["user"],$b);
-                        $a[$team]["size"]+=1;
+                        $selected = ($mark >= $passMark) ? 1 : 0;
+                        
+                        if(in_array($event,$techEvents) || $selected == 1)    {
+                            $teamsize=$a[$team]["size"];
+                            $newname='u'.($teamsize+1);
+                            $b=array(
+                                    "qrcode"=>$barcode,
+                                    "name"=>$name,
+                                    "phone"=>$phone
+                            );
+                            array_push($a[$team]["user"],$b);
+                            $a[$team]["size"]+=1;
+                        }
+                        
                     }
 
                 }
