@@ -91,8 +91,10 @@ class _CreateTeamPageState extends State<CreateTeamPage>
 
   List<String> members = ['1', '2', '3'];
 
-  var eventMap = {'OSPC':'ospc', 'JAVA':'java', 'DB Dwellers':'dbd',
-                    'Python':'python', 'CnC':'cnc', 'CTCI':'ctci'};
+  var eventMap = {'OSPC':'ospc', 'Coffee With Java':'java', 'DB Dwellers':'dbd',
+                  'C Noobies':'cnob','Think-a-Thon' : 'think',
+                  'Hexathlon' : 'hex','Web Hub' : 'web',
+                    'Parsel Tongue':'python'};
 
 
   @override
@@ -290,6 +292,8 @@ class _CreateTeamPageState extends State<CreateTeamPage>
   Widget build(BuildContext context) {
 
     this.event = eventMap[widget.eventName];
+
+    
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(

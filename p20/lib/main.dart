@@ -31,13 +31,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List<String> events = ['OSPC', 'DB Dwellers', 'Street Coding','Data Structure','Blind Coding','Hexathlon','Web Hub','Paper Presentation','Coffee With Java', 'Parsel Tongue',];
+  List<String> events = ['OSPC', 'DB Dwellers', 'C Noobies','Think-a-Thon','Hexathlon','Web Hub','Coffee With Java', 'Parsel Tongue'];
   String event, password;
 
   
-  var passwordMap = {'OSPC':'ospc#137','DB Dwellers':'db@135','Street Coding':'sc%248',
-                      'Data Structure':'ds^890','Blind Coding':'bc@123','Hexathlon':'hex*987',
-                      'Web Hub':'web/123','Paper Presentation':'pp-765','Coffee With Java':'java+654',  
+  var passwordMap = {'OSPC':'ospc#137','DB Dwellers':'db@135',
+                      'C Noobies':'cnob#109', 
+                      'Hexathlon':'hex*987',
+                      'Web Hub':'web/123','Think-a-Thon':'think-765','Coffee With Java':'java+654',  
                       'Parsel Tongue':'py=012'};
 
   final passwordController = TextEditingController();
@@ -51,6 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future checkPassword(event)
   {
+
+    print(event);
+
     String dialogText = 'Empty';
     password = passwordController.text;
     if(event==null) {
@@ -88,6 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -141,7 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   new Container(
                     width: 300.0,
                     //height: (MediaQuery.of(context).size.height)/1.25,
-                    
                     child: new Column(
                       children : [
                         new Padding(padding: new EdgeInsets.all(15.0)),
@@ -189,64 +198,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                //   //       new MaterialButton(
-                //   //         //minWidth: 100.0,
-                //   //         //height: 25.0,
-                //   //         padding: const EdgeInsets.all(20.0),
-                //   //         textColor: Colors.white,
-                //   //         color: Colors.grey,
-                //   //         splashColor: Colors.black38, 
-                //   //         onPressed: () {
-                //   //           checkPassword("teamPage");
-                //   //         },
-                //   //         child: new Text(
-                //   //           "CREATE TEAM",
-                //   //           style: new TextStyle(
-                //   //             fontSize: 15.0,
-                //   //             color: Colors.white,
-                //   //             ),
-                //   //           ),
-                //   //       ),
-                //   //       new Padding(padding: new EdgeInsets.all(20.0)),
-                //   //       new MaterialButton(
-                //   //         minWidth: 100.0,
-                //   //         //height: 25.0,
-                //   //         padding: const EdgeInsets.all(5.0),
-                //   //         textColor: Colors.white,
-                //   //         color: Colors.grey,
-                //   //         onPressed: () {
-                //   //           checkPassword("resultPage");
-                //   //         },
-                //   //         splashColor: Colors.black38,
-                //   //         child: new Text(
-                //   //           "VIEW, UPLOAD OR PUBLISH RESULTS",
-                //   //           style: new TextStyle(
-                //   //             fontSize: 15.0,
-                //   //             color: Colors.white,
-                //   //             ),
-                //   //         ),
-                //   //       ),
-                //   //       new Padding(padding: new EdgeInsets.all(15.0)),
-                        
-                //   //       new MaterialButton(
-                //   //         //minWidth: 100.0,
-                //   //         // height:  500-(MediaQuery.of(context).size.height),
-                    
-                //   //         padding: const EdgeInsets.all(15.0),
-                //   //         textColor: Colors.white,
-                //   //         color: Colors.grey,
-                //   //         splashColor: Colors.black38, 
-                //   //         onPressed: () {
-                //   //           checkPassword("qrPage");
-                //   //         },
-                //   //         child: new Text(
-                //   //           "VIEW QR",
-                //   //           style: new TextStyle(
-                //   //             fontSize: 15.0,
-                //   //             color: Colors.white,
-                //   //             ),
-                //   //           ),
-                //   //       ),
                         
                       ])
                   ),

@@ -17,10 +17,10 @@ class _QRPageState extends State<QRPage> {
 
     _QRPageState({this.eventName});
 
-  var qrMap = {'OSPC':'ospc@123','DB Dwellers':'db@123','Street Coding':'sc@123',
-                      'Data Structure':'ds@123','Blind Coding':'bc@123','Hexathlon':'hex@123',
-                      'Web Hub':'web@123','Paper Presentation':'pp@123','Coffee With Java':'java@123',  
-                      'Parsel Tongue':'py@123'};
+  var qrMap = {'OSPC':"@#'6<&sW5UFT)~pW",'DB Dwellers':">ny]djSv\$yt#2C&]",
+                'C Noobies': 'R9UswyX6>9)nN}R\$','Think-a-Thon':'S6Kp[F+/Dh~\$vRj>',
+                'Hexathlon':'[k,me6g3MGbUM-As','Web Hub':'6kv%4CUdT,PEwE&Z',
+                'Coffee With Java':'ww9@#mCdWc`n[=-H','Parsel Tongue':"7Ws5k2B]'C-r^6=y"};
 
  
    @override

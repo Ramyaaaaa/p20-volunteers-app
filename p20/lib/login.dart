@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'addUser.dart';
 import 'createTeam.dart';
 import 'uploadResults.dart';
 import 'dart:async';
@@ -46,18 +45,14 @@ class _MyLoginPageState extends State<MyLoginPage> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        title:
           
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: new Text(
-                "Hello Volunteer",
+                widget.event + ' volunteers page',
               ),
             ),
-          ],
-        ),
       ),
       body: 
       Builder(builder : (context) => Center(
@@ -65,7 +60,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Padding(padding: new EdgeInsets.all(5.0)),
+            // new Padding(padding: new EdgeInsets.all(5.0)),
             
             
             new MaterialButton(

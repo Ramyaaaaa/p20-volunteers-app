@@ -58,6 +58,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //     $teamID .= $barcode;
         // }
        // echo "team id " .$teamID;
+
+
+        foreach($barcodeArray as $barcode)  {
+
+
+            if($barcode != null && $barcode != ""   )   {
+
+                $sql = "SELECT name from ". $event. " where barcode = ?";
+                $stmt = $conn->prepare($sql);
+                if($stmt)  {
+                    $stmt->bind_param("s",$barcode);
+                    $stmt->execute();
+                    $stmt->bind_result($name);
+                    $stmt->store_result();
+            
+                    if ($stmt->num_rows > 0) {
+                        $e = "User with barcode ". $barcode ." already participated";
+                        $err = array( 
+                            "status"=>"404", 
+                            "message"=> $e
+                            ); 
+                        
+                        $has_err = 1;
+                        
+                $stmt->free_result();
+                        
+                        exit(json_encode($err));
+                    }
+                    
+                }
+                
+                $stmt->free_result();
+            }
+        }
+        
+
         foreach($barcodeArray as $barcode)  {
 
             // echo "barcode". $barcode;

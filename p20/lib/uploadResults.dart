@@ -79,11 +79,13 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   var eventMap = {
     'OSPC': 'ospc',
-    'JAVA': 'java',
+    'C Noobies' : 'cnob',
+    'Coffee With Java': 'java',
     'DB Dwellers': 'dbd',
-    'Python': 'python',
-    'CnC': 'cnc',
-    'CTCI': 'ctci'
+    'Parsel Tongue': 'python',
+    'Web Hub': 'web',
+    'Think-a-Thon' : 'think',
+    'Hexathlon' : 'hex'
   };
 
   final marksController = TextEditingController();

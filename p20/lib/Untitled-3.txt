@@ -1,5 +1,0 @@
-String url = 'https://www.prayatna.org.in/volunteersapp/publish.php';
-
-    Map<String,dynamic> res = {'event': event, 'id': '425364','view':1};
-    print(json.encode(res));
-    String body = json.encode(res);
