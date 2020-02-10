@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'request.dart';
 import 'search.dart';
 import 'team.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 List<Team> teamDetails;
 
@@ -116,6 +117,12 @@ var eventMap = {
   }
 }
 
+void _contactPressed(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+    
+  }
 class ResultsContent extends StatelessWidget {
   final Team team;
 
@@ -128,17 +135,43 @@ class ResultsContent extends StatelessWidget {
     final TextStyle textStyle = this.team.style;
 
     List names = [];
+    List phoneNumbers = [];
     team.members.forEach((key) => {
           if (key != "Team Members")
-            {names.add(key['name'])}
+            {names.add(key['name']),
+            phoneNumbers.add(key['phone'])
+            }
           else
-            {names.add("Team Members")}
+            {names.add("Team Members"),
+            phoneNumbers.add('Contact')}
         });
+    final membersMap = {};
+    for(int i=0;i<names.length;i++) {
+      membersMap[names[i]] = phoneNumbers[i];
+    }
 
-    final members = List<Widget>.from(names.map((key) => Center(
-          child: Text(key, style: textStyle),
-        )));
+    final members = List<Widget>.from(membersMap.entries.map((entry) => 
+    // Align(alignment: AxisDirection.left,
+    
+    Center(
+          child: 
+          entry.key.toString() != 'Team Members' ? FlatButton.icon(
+            onPressed: () => _contactPressed("tel:${entry.value.toString()}"),
+            icon: new Icon(IconData(0xe0b0, fontFamily: 'MaterialIcons'),
+                color: Colors.yellowAccent, size: 15),
+            label: Text( 
+              entry.key.toString(),
+              overflow: TextOverflow.ellipsis,
+            )):
+            Text(entry.key.toString(),style: textStyle)
+        
+        )
+        )
+        );
+
     final marksColumn = <Widget>[
+      
+
       Center(child: Text("${team.marks}", style: textStyle)),
     ];
     if (team.isSelected) {
@@ -152,6 +185,7 @@ class ResultsContent extends StatelessWidget {
             child: Text("${team.teamID}", style: textStyle),
           ),
         ),
+        
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -161,6 +195,7 @@ class ResultsContent extends StatelessWidget {
             children: members,
           ),
         ),
+
         SizedBox(
           width: 80,
           child: Column(

@@ -15,11 +15,6 @@ $dbname = "prayatna_db";
 // Create connection
 $conn = new mysqli($servername, $username, $password,$dbname) or die("Unable to connect");
 //echo "connection success";
-
-
-
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $has_err = 0;
@@ -120,11 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute();
                 $stmt->bind_result($name,$phoneNo);
                 $stmt->store_result();
-        
                 if ($stmt->num_rows > 0) {
                     while($stmt->fetch()) {
                         if ($stmt->num_rows > 0) {
-                        
                             $sql2 = "INSERT into " . $event. " (name,phoneNumber,barcode,team_id) VALUES (?,?,?,?);";
                             $stmt2 = $conn->prepare($sql2);
                             if(!$stmt2)  {
@@ -200,7 +193,7 @@ else
         "message"=>"Not a POST Method"); 
     // var_dump(http_response_code(400));
 
-    echo json_encode($err); ;
+    echo json_encode($err); 
 
 }
 $conn->close();

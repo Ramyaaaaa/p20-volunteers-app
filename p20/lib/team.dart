@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Team {
+  final String phoneNumber;
   final String marks, rank;
   final String teamID;
   final bool isSelected;
@@ -8,6 +9,7 @@ class Team {
   final TextStyle style;
 
   Team({
+    this.phoneNumber,
     this.teamID,
     this.members,
     this.marks,

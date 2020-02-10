@@ -25,6 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $has_err = 0;
     $user = file_get_contents('php://input');
+
+    // echo $user;
+    $user = trim($user);
+    // echo $user;
     // echo $userID;
     // $teamID = $input["teamID"];
     // $event = $input["event"];

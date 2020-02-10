@@ -233,7 +233,11 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
           content: TextField(
             onChanged: (String textTyped) {
               setState(() {
+
+                
                 passMark = textTyped;
+                
+                
               });
             },
             keyboardType: TextInputType.number,
@@ -242,6 +246,10 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
           actions: <Widget>[
             new FlatButton(
                 onPressed: () {
+                  if(!isNumeric(passMark)) {
+                  Navigator.pop(context);
+                  return returnAlert('Marks contain alphabets or negative numbers');
+                }
                   publishResult();
                   Navigator.pop(context);
                   
@@ -293,10 +301,20 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
 
   Future scan() async {
     try {
+
+      if(this.teamID != '') {
+        return returnAlert("Team ID already scanned");
+      }
       String barcode = await BarcodeScanner.scan();
       setState(() {
-        this.teamID += barcode;
-        this.barcode = barcode;
+
+      //  if(this.teamID != '') {
+        //  returnAlert("Team ID already scanned");
+        //}
+        //else {
+          this.teamID += barcode;
+          this.barcode = barcode;
+       // }
       });
       isSubmitDisabled = false;
     } on PlatformException catch (e) {
@@ -357,6 +375,7 @@ class _UploadResultsPageState extends State<UploadResultsPage> {
                   new Container(
                     width: (MediaQuery.of(context).size.width) / 1.5,
                     child: new TextField(
+                      keyboardType: TextInputType.number,
                       controller: marksController,
                       decoration:
                           new InputDecoration(hintText: "Marks obtained"),

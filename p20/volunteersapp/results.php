@@ -39,13 +39,10 @@ try {
         else if($input["id"] == 425364){
 
             $str = file_get_contents($input["event"].'.json');
-            // echo $str;
-            $res = json_decode($str,TRUE);
-            // echo $input["event"].'.json';
 
+            $res = json_decode($str,TRUE);
             if (str != '' && is_array($res)) {
 
-                // echo "file is not empty";
                 if($input["view"] == 1)  {
                     // echo "publish";
                     exit(json_encode($res));
@@ -115,7 +112,7 @@ try {
                     if($prev!=$team)
                     {
                         $selected = ($mark >= $passMark) ? 1 : 0;
-                        if(in_array($event,$techEvents) || $selected == 1)    {
+                        if($selected == 1)    {
                             $a[$team]=array(
                                 "user"=>array(array(
                                     "qrcode"=>$barcode,
@@ -135,7 +132,7 @@ try {
                     {
                         $selected = ($mark >= $passMark) ? 1 : 0;
                         
-                        if(in_array($event,$techEvents) || $selected == 1)    {
+                        if($selected == 1)    {
                             $teamsize=$a[$team]["size"];
                             $newname='u'.($teamsize+1);
                             $b=array(

@@ -304,8 +304,8 @@ class _CreateTeamPageState extends State<CreateTeamPage>
 
     this.event = eventMap[widget.eventName];
 
-    
-    return Scaffold(
+    return 
+    Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         leading: new IconButton(

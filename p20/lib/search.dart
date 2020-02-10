@@ -62,13 +62,15 @@ class DataSearch extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     resultsList = [];
     if (query.isNotEmpty) {
+     // query += query.toLowerCase();
       for (var index = 0; index < teamDetails.length; index++) {
         List<dynamic> memberList = teamDetails[index].memberList();
         print(memberList);
         memberList.forEach((member) {
           
-          if (member['name'].toLowerCase().startsWith(query) && member['name'] != null) {
-            resultsList.add(index);
+          if (member['name'].toLowerCase().startsWith(query.toLowerCase()) && member['name'] != null) {
+             if(!resultsList.contains(index))
+              resultsList.add(index);
           }
         });
       }
